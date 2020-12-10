@@ -2,43 +2,50 @@
 
 namespace App\Controller;
 
-use App\Entity\Account;
-use App\Entity\AngelRelationship;
 use App\Entity\Door;
-use App\Service\DeviceService;
+use App\Entity\Game;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class DoorNextController
 {
-    private $em;
-
-
-    public function __construct(EntityManagerInterface $em)
+    public function __invoke(Game $data, Request $request, EntityManagerInterface $em)
     {
-        $this->em = $em;
-    }
+        //Start the game
+        if (null === $data->timerStart) {
+            $doorCount = 20;
+            $data->doors = $em->getRepository(Door::class)->findBy([], null, $doorCount);
+            //shuffle($data->doors);
 
-    public function __invoke($data = null, Request $request)
-    {
-        /** @var Door[] $doors */
-        $inactiveDoors = $this->em->getRepository(Door::class)->findBy(["current"=>false]);
-        $allDoors = $this->em->getRepository(Door::class)->findAll();
+            $data->remainingDoorsCount = $doorCount;
+            $data->timerStart = new \DateTime();
+            // Give an extra 1 seconds
+            $data->timerStart->add(new \DateInterval('P0DT0H0M1S'));
+        } else {
+            foreach (Game::SYMBOLS as $symbol) {
+                $requirement = count(array_keys($data->getCurrentDoor()->symbols, $symbol));
+                $playgroundSymbols = 0;
 
-        /** @var Door $selected */
-        $selected = $inactiveDoors[array_rand($inactiveDoors)];
+                foreach ($data->playground as $skillOnPlayground) {
+                    $playgroundSymbols += count(array_keys($skillOnPlayground, $symbol));
+                }
 
-        foreach ($allDoors as $allDoor) {
-            $allDoor->current = false;
+                if ($requirement > $playgroundSymbols) {
+                    throw new BadRequestHttpException("Not enough $symbol, $playgroundSymbols on the playground, $requirement needed");
+                }
+            }
+
+            if (0 == $data->remainingDoorsCount) {
+                throw new BadRequestHttpException('Not implemented yet');
+            }
         }
 
-        $selected->current = true;
+        --$data->remainingDoorsCount;
+        $data->playground = [];
 
-        $this->em->flush();
+        $em->flush();
 
-        return $selected;
+        return $data;
     }
 }

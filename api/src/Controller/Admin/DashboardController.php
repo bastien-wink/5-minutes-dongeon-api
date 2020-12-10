@@ -20,20 +20,18 @@ class DashboardController extends AbstractDashboardController
         $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
 
         return $this->redirect($routeBuilder->setController(DoorCrudController::class)->generateUrl());
-
     }
 
     public function configureMenuItems(): iterable
     {
-            yield MenuItem::linkToCrud('Door', 'fa fa-user', Door::class)->setDefaultSort(['name' => 'DESC']);
-
+        yield MenuItem::linkToCrud('Door', 'fa fa-user', Door::class)->setDefaultSort(['name' => 'DESC']);
     }
+
     public function configureDashboard(): Dashboard
     {
         $dashboard = Dashboard::new();
 
         $dashboard->setTitle('Admin ');
-
 
         return $dashboard;
     }

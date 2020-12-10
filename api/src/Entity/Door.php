@@ -4,27 +4,20 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Controller\DoorNextController;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * This is a dummy entity. Remove it!
- *
  * @ORM\Entity
  * @ApiResource(
- *     formats={"json"},
+ *  formats={"json"},
  *  itemOperations={
  *      "get",
  *  },
  *  collectionOperations={
- *      "get",
- *      "next"={
- *           "method"="GET",
- *           "path"="/doors/next",
- *           "controller"=DoorNextController::class
- *     }
+ *      "get"
  *   }
  * )
  * @ApiFilter(SearchFilter::class, properties={"current": "exact"})
@@ -37,6 +30,7 @@ class Door
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"game:output"})
      */
     private $id;
 
@@ -50,18 +44,15 @@ class Door
 
     /**
      * @ORM\Column(nullable=true)
+     * @Groups({"game:output"})
      */
     public $imageUrl = '';
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @Groups({"game:output"})
      */
     public $symbols = [];
-
-    /**
-     * @ORM\Column(type="boolean", options={"default"="0"})
-     */
-    public $currentlyPlayed = false;
 
     public function getId(): int
     {
