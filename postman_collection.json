@@ -90,12 +90,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/players",
-					"protocol": "http",
+					"raw": "{{host}}/players",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
 						"players"
 					]
@@ -115,12 +113,10 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/players/{{playerId}}",
-					"protocol": "http",
+					"raw": "{{host}}/players/{{playerId}}",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
 						"players",
 						"{{playerId}}"
@@ -141,14 +137,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/games/{{gameId}}/next_door",
-					"protocol": "http",
+					"raw": "{{host}}/{{gameId}}/next_door",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
-						"games",
 						"{{gameId}}",
 						"next_door"
 					]
@@ -168,12 +161,10 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/games/{{gameId}}",
-					"protocol": "http",
+					"raw": "{{host}}/games/{{gameId}}",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
 						"games",
 						"{{gameId}}"
@@ -194,12 +185,10 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/players/{{playerId}}/use/0",
-					"protocol": "http",
+					"raw": "{{host}}/players/{{playerId}}/use/0",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
 						"players",
 						"{{playerId}}",
@@ -222,12 +211,10 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/players/{{playerId}}/draw",
-					"protocol": "http",
+					"raw": "{{host}}/players/{{playerId}}/draw",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
 						"players",
 						"{{playerId}}",
@@ -238,28 +225,23 @@
 			"response": []
 		},
 		{
-			"name": "Discard player skill",
+			"name": "API Documentation with swagger",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key": "Accept",
 						"type": "text",
-						"value": "application/json"
+						"value": "text/html"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/players/{{playerId}}/discard/0",
-					"protocol": "http",
+					"raw": "{{host}}/",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
-						"players",
-						"{{playerId}}",
-						"discard",
-						"0"
+						""
 					]
 				}
 			},
