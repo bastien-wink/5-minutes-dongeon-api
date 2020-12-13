@@ -41,12 +41,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/games",
-					"protocol": "http",
+					"raw": "{{host}}/games",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8000",
 					"path": [
 						"games"
 					]
@@ -82,7 +80,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Bob\",\n    \"gamePassword\": \"{{gamePassword}}\"\n}",
+					"raw": "{\n    \"name\": \"Bob2\",\n    \"gamePassword\": \"{{gamePassword}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -137,11 +135,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/{{gameId}}/next_door",
+					"raw": "{{host}}/games/{{gameId}}/next_door",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"games",
 						"{{gameId}}",
 						"next_door"
 					]
@@ -150,7 +149,31 @@
 			"response": []
 		},
 		{
-			"name": "Games status",
+			"name": "Games status with ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/games/{{gameId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"games",
+						"{{gameId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Games status with password",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -185,7 +208,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/players/{{playerId}}/use/0",
+					"raw": "{{host}}/players/{{playerId}}/use/2",
 					"host": [
 						"{{host}}"
 					],
@@ -193,7 +216,7 @@
 						"players",
 						"{{playerId}}",
 						"use",
-						"0"
+						"2"
 					]
 				}
 			},
